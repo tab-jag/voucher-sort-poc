@@ -11,7 +11,37 @@ use App\Dto\Voucher;
 final class VoucherSorter implements VoucherSorterInterface
 {
     private User $user;
-    public function sort(User $user, array $vouchers)
+
+    public function __construct(
+        private readonly VoucherSorterCriteriaInterface $criteria,
+    )
+    {
+    }
+
+    public function sortByCriteria(User $user, array $vouchers): array
+    {
+        // sort the vouchers alphabetically by its label
+        uasort($vouchers, static function (Voucher $voucher1, Voucher$voucher2) {
+            return $voucher1->getLabel() <=> $voucher2->getLabel();
+        });
+
+        foreach ($vouchers as $voucher) {
+            // identify in which criterion the voucher belongs to by matching them,
+            // criteria are arranged by priority at this point
+            foreach ($this->criteria->getIterator() as $criterion) {
+                if ($criterion->matches($voucher, $user)) {
+                    // store the voucher into the criterion
+                    $criterion->add($voucher);
+                    // when a match is found, move on to the next voucher
+                    continue 2;
+                }
+            }
+        }
+
+        return array_merge(...$this->criteria->getValues());
+    }
+
+    public function sort(User $user, array $vouchers): array
     {
         $this->user = $user;
 
