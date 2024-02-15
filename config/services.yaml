@@ -22,3 +22,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    _instanceof:
+        App\Service\Criteria\CriterionInterface:
+            tags: ['sorter_criterion']
+
+    App\Service\VoucherSorterCriteria:
+        arguments:
+            $criteria: !tagged 'sorter_criterion'

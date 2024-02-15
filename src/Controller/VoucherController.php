@@ -80,7 +80,7 @@ final class VoucherController extends AbstractController
 
         $serializer = new Serializer($normalizers, $encoders);
 
-        $newVouchers = $this->voucherSorter->sort($user, $vouchers);
+        $newVouchers = $this->voucherSorter->sortByCriteria($user, $vouchers);
 
         return new JsonResponse(
             json_decode(
