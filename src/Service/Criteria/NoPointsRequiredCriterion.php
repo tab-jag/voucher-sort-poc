@@ -18,4 +18,9 @@ final class NoPointsRequiredCriterion extends AbstractCriterion implements Crite
     {
         return 5;
     }
+
+    public function getPosition(): int
+    {
+        return 1;
+    }
 }

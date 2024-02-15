@@ -20,4 +20,9 @@ final class NoSkuCriterion extends AbstractCriterion implements CriterionInterfa
     {
         return 3;
     }
+
+    public function getPosition(): int
+    {
+        return 3;
+    }
 }

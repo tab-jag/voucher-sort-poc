@@ -10,16 +10,21 @@ abstract class AbstractVoucherSorterCriteria
 {
     protected array $criteria = [];
 
-    public function __construct(CriterionInterface ...$criteria) {
+    public function __construct(iterable $criteria) {
         $this->setCriteria(...$criteria);
     }
 
     public function setCriteria(CriterionInterface ...$criteria): VoucherSorterCriteriaInterface
     {
-        // preserve the criteria arrangement based on the argument order
-        foreach ($criteria as $criterion) {
-            $this->criteria[$criterion->getName()] = $criterion;
-        }
+        // always arrange the criteria based on the position value
+        uasort($criteria, static function (
+            CriterionInterface $criterion1,
+            CriterionInterface $criterion2,
+        ) {
+            return $criterion1->getPosition() <=> $criterion2->getPosition();
+        });
+
+        $this->criteria = $criteria;
 
         return $this;
     }
@@ -31,6 +36,7 @@ abstract class AbstractVoucherSorterCriteria
     public function getValues(): array
     {
         $values = [];
+
         foreach ($this->criteria as $criterion) {
             $values[] = $criterion->getValues();
         }

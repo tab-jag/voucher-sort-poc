@@ -18,4 +18,9 @@ final class InsufficientPointsCriterion extends AbstractCriterion implements Cri
     {
         return 1;
     }
+
+    public function getPosition(): int
+    {
+        return 5;
+    }
 }

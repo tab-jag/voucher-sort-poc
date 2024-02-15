@@ -18,4 +18,9 @@ final class SufficientPointsCriterion extends AbstractCriterion implements Crite
     {
         return 4;
     }
+
+    public function getPosition(): int
+    {
+        return 2;
+    }
 }

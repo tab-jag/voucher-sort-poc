@@ -13,6 +13,8 @@ interface CriterionInterface
 
     public function getPriority(): int;
 
+    public function getPosition(): int;
+
     public function getName(): string;
 
     public function add(mixed $item): void;

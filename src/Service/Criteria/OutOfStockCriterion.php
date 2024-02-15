@@ -12,6 +12,8 @@ final class OutOfStockCriterion extends AbstractCriterion implements CriterionIn
 {
     public function matches(Voucher $voucher, User $user): bool
     {
+        return false; // disabled this for now
+
         $offeredProduct = $voucher->getOfferedProduct();
 
         if ($offeredProduct === null && $voucher->getType() !== Voucher::GIFT_TYPE) {
@@ -37,6 +39,11 @@ final class OutOfStockCriterion extends AbstractCriterion implements CriterionIn
     public function getPriority(): int
     {
         return 2;
+    }
+
+    public function getPosition(): int
+    {
+        return 4;
     }
 }
 
